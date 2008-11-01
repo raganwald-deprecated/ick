@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: inside.txt</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>inside.txt</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>website/inside.txt
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Fri May 30 13:57:50 -0400 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+h1. Inside the Invocation Construction Kit
+</p>
+<p>
+h2. More about the four block structures
+</p>
+<p>
+&quot;Ick&quot;:index.html provides let, a method for block-structuring
+Ruby code. As already shown, if you want someone&#8216;s phone number only
+if they are a friend: @let(Person.find(:first, &#8230;)) { |person|
+person.phone_number if person.friend? }@
+</p>
+<p>
+This code makes it clear that you only need the @person@ variable inside
+the block. If you want to refactor this code, you know that the entire
+expression can move without breaking another piece of code.
+</p>
+<p>
+h3. let, returning, my, and inside
+</p>
+<p>
+As shown above, let does the obvious thing: it passes a value to a block,
+it evaluates the block in the caller&#8216;s environment, and it returns
+the result of the block. Hmmm&#8230;
+</p>
+<p>
+There are two binary decisions to be made about every block: First, do you
+want to evaluate the block in the calling environment (which is how almost
+every block is evaluated in Ruby), or do you want to evaluate the block in
+the value&#8216;s context. In other words, does <em>self</em> stay the
+same, or does it become the value in the block?
+</p>
+<p>
+If you want something that behaves like let but evaluates in the
+value&#8216;s environment just like please, you can use my:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; my(Person.find(:first, &#8230;)) do
+</p>
+<pre>
+        first_name = 'Charles'
+        last_name = 'Babbage'
+        friends &lt;&lt; 'Ada Lovelace'
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+This will return Charles Babbage&#8216;s friends. On the surface,
+<em>evaluates_in_value_environment</em> is about the syntactic sugar of
+dropping an instance variable. But with a little thought, you can come up
+with some really cool way to (mis)use this capability.
+</p>
+<p>
+So let and my both pass an expression to a block and return the result.
+Given that they both &#8216;declare&#8217; <em>returns_result</em>, this is
+not surprising. But there is another choice: <em>returns_value</em> instead
+of <em>returns_result</em>. Ruby on Rails includes the popular returning
+method, and it works the same in Ick:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; returning(Person.find(:first, &#8230;))
+do |p|
+</p>
+<pre>
+        p.first_name = 'Charles'
+        p.last_name = 'Babbage'
+        p.friends &lt;&lt; 'Ada Lovelace'
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+This returns the person record, not the list of friends. The block is
+evaluated strictly for side effects. And what happens if we want to return
+the value and also evaluate in the value&#8216;s environment?
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; inside(Person.find(:first, &#8230;)) do
+</p>
+<pre>
+        first_name = 'Charles'
+        last_name = 'Babbage'
+        friends &lt;&lt; 'Ada Lovelace'
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+The method inside returns the value and evaluates the block in the
+value&#8216;s environment.
+</p>
+<p>
+(The four methods were inspired by &quot;Michiel de Mare&#8216;s&quot;:<a
+href="http://blog.rubyenrails.nl/articles/2008/02/18/our-daily-method-10-object-r-rs-ds-s">blog.rubyenrails.nl/articles/2008/02/18/our-daily-method-10-object-r-rs-ds-s</a>
+post on the same subject, although Ick’s nomenclature is not compatible
+with Michiel’s. Michiel’s rsss, rrss, rsds, and rrds are called
+returning, let, inside, and my in Ick.)
+</p>
+<p>
+h3. lets
+</p>
+<p>
+Ick version 0.3 includes an experiemental form of let, lets, that allows
+you to bind multiple variables:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; lets(
+</p>
+<pre>
+    :person =&gt; Person.find(:first, ...),
+    :place  =&gt; City.select { ... },
+    :thing  =&gt; %w(ever loving blue eyed)) {
+  &quot;#{person.name} lives in #{place} where he is known as the '#{thing} thing.'&quot;
+</pre>
+<p>
+} &lt;/pre&gt;
+</p>
+<p>
+You must have the &quot;ruby2ruby gem&quot;:<a
+href="http://seattlerb.rubyforge.org/ruby2ruby">seattlerb.rubyforge.org/ruby2ruby</a>/
+installed to use lets. You know the drill:
+</p>
+<p>
+&lt;pre&gt;sudo gem install ruby2ruby&lt;/pre&gt;
+</p>
+<p>
+Like let, lets <em>evaluates_in_value_environment</em> and
+<em>returns_result</em>. You can roll your own variations if you want
+something else. If you&#8216;re familiar with Lisp, lets is a lot like
+Lisp&#8216;s simplest let macro. But not like letrec or let*. If you
+don&#8216;t know the difference, then lets will not suprise you. Basically,
+the binding of values to names works a lot like you would expect a hash to
+behave.
+</p>
+<p>
+For example, if I wrote:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; a = nil a = { :foo =&gt;
+call_something_else(), :bash =&gt; a[:foo] } &lt;/pre&gt;
+</p>
+<p>
+You would consider this bad code, wouldn&#8216;t you? There&#8216;s no
+expectation that the espressions are evaluated in any particular order.
+It&#8216;s the same with lets. This is probably a bad idea:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; foo = nil lets(:foo =&gt;
+call_something_else(), :bash =&gt; foo) { &#8230; } &lt;/pre&gt;
+</p>
+<p>
+@bash@ is not going to be bound to the return value of
+@call_something_else@, it&#8216;s going to be bound to nil. The variables
+you bind are only visible inside the block.
+</p>
+<p>
+h3. What about try and maybe?
+</p>
+<p>
+The methods try and maybe are both implemented as
+<em>evaluates_in_calling_environment</em>, because that is least
+surprising. But when you&#8216;re rolling your own, you might want to
+change that to make things more sugary. For example, here is a different
+version of try:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; class Please &lt; <a
+href="../../classes/Ick/Guard.html">Ick::Guard</a>
+</p>
+<pre>
+  guard_with { |value, sym| value.respond_to?(sym) == true }
+  evaluates_in_value_environment and returns_result
+  belongs_to Object
+</pre>
+<p>
+end
+</p>
+<p>
+please(&#8230;) { may.i.have.some.more } &lt;/pre&gt;
+</p>
+<p>
+The method please executes in the value&#8216;s environment, and thus it
+can call methods directly. Here is the key point about Ick as compared to
+rolling your own methods directly: you can combine and recombine the parts
+to make new kinds of methods. As you just saw, we can make try and please
+out of the same building blocks. This is why Ick is a &quot;contruction
+kit,&quot; not just a collection of handy syntactic short cuts.
+</p>
+<p>
+h2. Wrap Music
+</p>
+<p>
+The four methods let, returning, my, and inside are fairly simple.
+There&#8216;s some finagling with what they return and their evaluation
+environment, but evaluation within the environment is 100% standard Ruby.
+But things get really interesting when we want to actually change
+Ruby&#8216;s evaluation behaviour. Specifically, when we want to change
+what it means to call a method on the value we provide.
+</p>
+<p>
+That&#8216;s what maybe, please, and try all do: when a method is called on
+the value, they intercept it and decide whether to call the method or
+prematurely return <em>nil</em>. Ick can&#8216;t actually change the
+behaviour of the Ruby interpreter, so what it does is as close to evil
+metaprogramming as possible. Ick doesn&#8216;t do any method redefinition
+or method chain manipulation, instead it performs its juju by wrapping the
+value in a delegator. Ick&#8216;s delegators are called <em>Wrappers</em>.
+</p>
+<p>
+Ick&#8216;s built-in methods that use wrappers inherit from @<a
+href="../../classes/Ick/Wrap.html">Ick::Wrap</a>@. When the result is
+returned from the block, it is unwrapped if it is wrapped.
+</p>
+<p>
+h3. Hand Rolling
+</p>
+<p>
+You can use <a href="../../classes/Ick/Wrap.html">Ick::Wrap</a> along with
+your own wrappers by calling invoke_wrapped:
+</p>
+<p>
+&lt;pre syntax=&quot;Ruby&quot;&gt; class MyWrapper &lt; <a
+href="../../classes/Ick/Wrapper.html">Ick::Wrapper</a>
+</p>
+<pre>
+  def initialize(value)
+    # ...
+  end
+  # ...
+</pre>
+<p>
+end
+</p>
+<p>
+Ick::Wrap.instance.invoke_wrapped(Person.find(:first, &#8230;), MyWrapper)
+&lt;/pre&gt;
+</p>
+<p>
+If you need additional parameters for your wrapper, you can declare them in
+the initializer and pass them to invoke_wrapped:
+</p>
+<p>
+&lt;pre syntax=&quot;Ruby&quot;&gt; class MyWrapper &lt; <a
+href="../../classes/Ick/Wrapper.html">Ick::Wrapper</a>
+</p>
+<pre>
+  def initialize(value, extra1, extra2)
+    # ...
+  end
+  # ...
+</pre>
+<p>
+end
+</p>
+<p>
+Ick::Wrap.instance.invoke_wrapped(Person.find(:first, &#8230;), MyWrapper,
+:foo, :bar) &lt;/pre&gt;
+</p>
+<p>
+The methods maybe, please, and try are all implemented as subclasses of
+Ick:Guard. Have a look at guard.rb to see how to hide the extra wrapping
+syntax that invoke_wrapped requires.
+</p>
+<p>
+h3. ArrayWrapper
+</p>
+<p>
+<a href="../../classes/Ick/ArrayWrapper.html">Ick::ArrayWrapper</a> wraps a
+collection of receivers. Any message sent to the wrapper is dispatched to
+each of the receivers in the collection. Here&#8216;s a simplified
+implementation:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; class ArrayWrapper &lt; Wrapper
+</p>
+<pre>
+  def __invoke__(sym, *args, &amp;block)
+    @value.map { |_| _.__send__(sym, *args, &amp;block) }
+  end
+
+  is_contagious
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+What on Earth is it for? Specifically, what&#8216;s wrong with just using
+Enumerable#map if we want to send the same message(s) to each receiver in a
+collection?
+</p>
+<p>
+The answer is that when we use Enumerable#map, it executes the entire block
+once for each receiver. So if there are side effects in the block, they are
+executed once for each receiver as well. Whereas ArrayWrapper dispatches
+the messages to each receiver without executing side effects more than
+once.
+</p>
+<p>
+<a href="../../classes/Ick/Tee.html">Ick::Tee</a> provides a method for
+using an ArrayWrapper with <em>return_value</em> semantics. When you use
+tee, it evaluates the block once, but dispatches methods to each of the
+values you pass in. It returns the first value you pass in. This can be
+handy for things like sending logging information to more than one log.
+</p>
+<p>
+Here&#8216;s one of the test cases you can find in the gem:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; def test_tee_semantics
+</p>
+<pre>
+  array_logger_one = []
+  array_logger_two = []
+  line_number = 0
+  [array_logger_one, array_logger_two].map do |log|
+    line_number += 1
+    log &lt;&lt; &quot;A#{line_number}&quot;
+    line_number += 1
+    log &lt;&lt; &quot;B#{line_number}&quot;
+  end
+  assert_equal(%w(A1 B2), array_logger_one)
+  assert_equal(%w(A3 B4), array_logger_two)
+  array_logger_one = []
+  array_logger_two = []
+  line_number = 0
+  tee(array_logger_one, array_logger_two) do |log|
+    line_number += 1
+    log &lt;&lt; &quot;A#{line_number}&quot;
+    line_number += 1
+    log &lt;&lt; &quot;B#{line_number}&quot;
+  end
+  assert_equal(%w(A1 B2), array_logger_one)
+  assert_equal(%w(A1 B2), array_logger_two)
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+When we used Enumerable#map, the side effect @line_number += 1@ is
+evaluated four times, twice for each receiver. However when we use tee, the
+side effect @line_number += 1@ is only evaluated twice, even though we have
+two receivers. Now that you know about the four execution possibilities
+encapsulated by let, returning, my, and inside, you can probably guess what
+fork does when I tell you that its implementation <em>returns_result</em>.
+</p>
+<p>
+h3. Beware!
+</p>
+<p>
+Because <a href="../../classes/Ick/Wrap.html">Ick::Wrap</a> is passing a
+wrapper into the block instead of the original value, you can get
+unexpected results under certain circumstances. For example, if you assign
+the value something else within the block such as an instance variable,
+when the block exits the value will still have whatever behaviour the
+wrapper creates.
+</p>
+<p>
+Therefore, wrappers are <em>unidirectional</em>: they only work when you
+are calling methods on your value, not when you are passing the wrapped
+value as a parameter to any other method. This is hideous: why should there
+be any difference between @{ |value| value + 1 }@ and @{ |value| 1 + value
+}@?
+</p>
+<p>
+Also, wrappers are <em>external</em>, they only affect messages sent to the
+wrapped value in your block. For example, if you are using try to avoid
+NoMethodErrors, any messages you send to the wrapped value will handled by
+the wrapper. But what happens if the wrapped value sends itself a message
+that it doesn&#8216;t handle? Aha, that will raise a NoMethodError!
+</p>
+<p>
+Wrappers are a very leaky abstraction, which is why I try to name things a
+little closer to what they actually do than what they purport to do but
+don&#8216;t really do. For example, we write @try { something.or.other }@
+to emphasize that we are only trying the things you see in front of you.
+</p>
+<p>
+h2. Why Ick?
+</p>
+<p>
+As just mentioned, Ick is a construction kit. By all means install the gem
+and go wild with let, returning, my, inside, try, and maybe. But have a
+look under the hood. Ick uses classes and template methods to replicate
+what can be done in a few lines of explicit code. For example,
+Object#returning is implemented in Rails as:
+</p>
+<p>
+&lt;pre syntax=&quot;ruby&quot;&gt; class Object
+</p>
+<pre>
+  def returning(value)
+    yield(value)
+    value
+  end
+</pre>
+<p>
+end &lt;/pre&gt;
+</p>
+<p>
+So why bother with Ick? Well, if you want to make a method just like
+Object#returning, only <em>X</em> (for some value of X), you can&#8216;t do
+that without copying, pasting, and modifying. Ick&#8216;s classes are
+included specifically so you can subclass things and make your own new
+kinds of methods that are variations of the existing methods.
+</p>
+<p>
+Thus, the extra abstraction is appropriate if you want to use the built-in
+methods as a starting point for your own exploratory programming. And if
+you don&#8216;t care, you just want the methods, by all means install the
+gem and just use them. Don&#8216;t worry about the implementation unless
+you identify it as a performance problem.
+</p>
+<p>
+h3. Where do you want to go today?
+</p>
+<p>
+The point behind abstracting invocation and evaluation is that you can
+_separate concerns_. For example, which methods to chain is one concern.
+How to handle nil or an object that does not respond to a method is a
+separate concern. Should you raise and handle and exception? Return nil?
+log an error? Why should error handling and logging be intermingled with
+your code?
+</p>
+<p>
+With Ick, you can separate the two issues. You can even make the handling
+pluggable. For example, if instead of calling let you call your own method,
+you could sometimes invoke @<a
+href="../../classes/Ick/Let.html">Ick::Let</a>@ with a block and other
+times invoke your own handler, perhaps one that logs every method called.
+</p>
+<p>
+Have fun!
+</p>
+<p>
+h2. Administrivia
+</p>
+<p>
+h3. Home Sweet Home
+</p>
+<p>
+&quot;ick.rubyforge.org&quot;:<a
+href="http://ick.rubyforge.org">ick.rubyforge.org</a>
+</p>
+<p>
+h3. How to submit patches
+</p>
+<p>
+Read the &quot;8 steps for fixing other people&#8216;s code&quot;:<a
+href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code">drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code</a>/.
+</p>
+<p>
+The trunk repository is @svn://rubyforge.org/var/svn/ick/trunk@ for
+anonymous access.
+</p>
+<p>
+h3. License
+</p>
+<p>
+This code is free to use under the terms of the &quot;MIT license&quot;:<a
+href="http://en.wikipedia.org/wiki/MIT_License">en.wikipedia.org/wiki/MIT_License</a>.
+</p>
+<p>
+h3. Shout Out
+</p>
+<p>
+&quot;Mobile Commons&quot;:<a href="http://mcommons.com">mcommons.com</a>/.
+Still Huge After All These Years.
+</p>
+<p>
+h3. Contact
+</p>
+<p>
+Comments are welcome. Send an email to &quot;Reginald Braithwaite&quot;:<a
+href="mailto:raganwald+rubyforge@gmail.com">raganwald+rubyforge@gmail.com</a>.
+And you can always visit &quot;weblog.raganwald.com&quot;:<a
+href="http://weblog.raganwald.com">weblog.raganwald.com</a>/ to see
+what&#8216;s cooking.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

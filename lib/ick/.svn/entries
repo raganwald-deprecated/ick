@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2008-03-10T04:57:06.697106Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick/lib/ick"
+   last-author="raganwald"
+   kind="dir"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="tee.rb"
+   text-time="2008-03-09T13:27:35.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="e365863da68cd7aff30df309631a4f11"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="sugar.rb"
+   text-time="2008-03-09T13:28:43.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="425b2f07bd04381e120b3b2f4cb3a998"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="guard.rb"
+   text-time="2008-03-08T20:57:38.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="32dba97560c3d142d522128dac160f9c"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="version.rb"
+   text-time="2008-03-10T04:46:46.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="84fadf65119bb598e752c3bf3fa5d945"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="advisor.rb"
+   text-time="2008-03-10T04:45:27.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="3569eb4d5e506eba2e8198a6540c4cb0"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="wrap.rb"
+   text-time="2008-03-09T13:12:40.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="6195f4880d2de0efc9ee06aaf308770f"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="base.rb"
+   text-time="2008-03-07T23:55:26.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="795ad719b2f9228cf3ec74cc06e97505"
+   last-author="raganwald"
+   kind="file"/>
+</wc-entries>

@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link rel="stylesheet" href="stylesheets/screen.css" type="text/css" media="screen" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>
+      Ick in 180 seconds or less
+  </title>
+  <script src="javascripts/rounded_corners_lite.inc.js" type="text/javascript"></script>
+<style>
+
+</style>
+  <script type="text/javascript">
+    window.onload = function() {
+      settings = {
+          tl: { radius: 10 },
+          tr: { radius: 10 },
+          bl: { radius: 10 },
+          br: { radius: 10 },
+          antiAlias: true,
+          autoPad: true,
+          validTags: ["div"]
+      }
+      var versionBox = new curvyCorners(settings, document.getElementById("version"));
+      versionBox.applyCornersToAll();
+    }
+  </script>
+</head>
+<body>
+<div id="main">
+
+    <h1>Ick in 180 seconds or less</h1>
+    <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/ick"; return false'>
+      <p>Get Version</p>
+      <a href="http://rubyforge.org/projects/ick" class="numbers">0.3.1</a>
+    </div>
+    <h2>Transforming your code</h2>
+
+
+	<p>Object#let turns:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Into:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Object#returning turns:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Into:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Object#my turns:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Into:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Object#inside turns:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<p>Into:</p>
+
+
+	<p><pre class='syntax'>
+</pre></p>
+
+
+	<h2>Test Cases</h2>
+
+
+	<p>The four canonical block structuring methods (#let, #returning, #my, and #inside):</p>
+
+
+	<p><pre class='syntax'>
+<span class="constant">Ick</span><span class="punct">.</span><span class="ident">sugarize</span>
+<span class="ident">arr</span> <span class="punct">=</span> <span class="punct">[]</span>
+
+<span class="comment"># let returns the value of the block and executes in the current environment</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="punct">&quot;</span><span class="string">3628800 ends with zero</span><span class="punct">&quot;,</span>
+  <span class="ident">let</span><span class="punct">((</span><span class="number">1</span><span class="punct">..</span><span class="number">10</span><span class="punct">).</span><span class="ident">inject</span><span class="punct">(&amp;:*))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">num</span><span class="punct">|</span>
+    <span class="ident">arr</span> <span class="punct">&lt;&lt;</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class
+    </span><span class="class">num</span> <span class="punct">%</span> <span class="number">10</span> <span class="punct">==</span> <span class="number">0</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> ends with zero</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> does not end with zero</span><span class="punct">&quot;</span>
+  <span class="punct">})</span>
+<span class="ident">assert_equal</span><span class="punct">([</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class </span><span class="class">],</span> <span class="ident">arr</span><span class="punct">)</span>
+
+<span class="comment"># returning returns the value of the expression and executes in the current environment</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="number">3628800</span><span class="punct">,</span>
+  <span class="ident">returning</span><span class="punct">((</span><span class="number">1</span><span class="punct">..</span><span class="number">10</span><span class="punct">).</span><span class="ident">inject</span><span class="punct">(&amp;:*))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">num</span><span class="punct">|</span>
+    <span class="ident">arr</span> <span class="punct">&lt;&lt;</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class
+    </span><span class="class">num</span> <span class="punct">%</span> <span class="number">10</span> <span class="punct">==</span> <span class="number">0</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> ends with zero</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> does not end with zero</span><span class="punct">&quot;</span>
+  <span class="punct">})</span>
+<span class="ident">assert_equal</span><span class="punct">([</span> <span class="constant">self</span><span class="punct">.</span><span class="ident">class</span><span class="punct">,</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class </span><span class="class">],</span> <span class="ident">arr</span><span class="punct">)</span>
+
+<span class="comment"># my returns the value of the block and executes in the expression's environment</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="punct">&quot;</span><span class="string">3628800 ends with zero</span><span class="punct">&quot;,</span>
+  <span class="ident">my</span><span class="punct">((</span><span class="number">1</span><span class="punct">..</span><span class="number">10</span><span class="punct">).</span><span class="ident">inject</span><span class="punct">(&amp;:*))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">num</span><span class="punct">|</span>
+    <span class="ident">arr</span> <span class="punct">&lt;&lt;</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class
+    </span><span class="class">num</span> <span class="punct">%</span> <span class="number">10</span> <span class="punct">==</span> <span class="number">0</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> ends with zero</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> does not end with zero</span><span class="punct">&quot;</span>
+  <span class="punct">})</span>
+<span class="ident">assert_equal</span><span class="punct">([</span> <span class="constant">self</span><span class="punct">.</span><span class="ident">class</span><span class="punct">,</span> <span class="constant">self</span><span class="punct">.</span><span class="ident">class</span><span class="punct">,</span> <span class="constant">Fixnum</span> <span class="punct">],</span> <span class="ident">arr</span><span class="punct">)</span>
+
+<span class="comment"># inside returns the value of the expression and executes in the expression's environment</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="number">3628800</span><span class="punct">,</span>
+  <span class="ident">inside</span><span class="punct">((</span><span class="number">1</span><span class="punct">..</span><span class="number">10</span><span class="punct">).</span><span class="ident">inject</span><span class="punct">(&amp;:*))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">num</span><span class="punct">|</span>
+    <span class="ident">arr</span> <span class="punct">&lt;&lt;</span> <span class="constant">self</span><span class="punct">.</span><span class="keyword">class
+    </span><span class="class">num</span> <span class="punct">%</span> <span class="number">10</span> <span class="punct">==</span> <span class="number">0</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> ends with zero</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{num}</span> does not end with zero</span><span class="punct">&quot;</span>
+  <span class="punct">})</span>
+<span class="ident">assert_equal</span><span class="punct">([</span> <span class="constant">self</span><span class="punct">.</span><span class="ident">class</span><span class="punct">,</span> <span class="constant">self</span><span class="punct">.</span><span class="ident">class</span><span class="punct">,</span> <span class="constant">Fixnum</span><span class="punct">,</span> <span class="constant">Fixnum</span> <span class="punct">],</span> <span class="ident">arr</span><span class="punct">)</span>
+</pre></p>
+
+
+	<p>The two most common guarded evauators (#maybe and #try):</p>
+
+
+	<p><pre class='syntax'>
+<span class="comment"># an object with two methods. #do returns itself, #do_not returns nil</span>
+<span class="ident">yoda</span> <span class="punct">=</span> <span class="ident">returning</span><span class="punct">(</span><span class="constant">Object</span><span class="punct">.</span><span class="ident">new</span><span class="punct">)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span>
+  <span class="keyword">def </span><span class="method">obj.do</span>
+    <span class="constant">self</span>
+  <span class="keyword">end</span>
+  <span class="keyword">def </span><span class="method">obj.do_not</span>
+    <span class="constant">nil</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment"># maybe handles nils, even for methods nil has, but not missing methods</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="ident">yoda</span><span class="punct">,</span> 
+  <span class="ident">maybe</span><span class="punct">(</span><span class="ident">yoda</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">do</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_nil</span><span class="punct">(</span>
+  <span class="ident">maybe</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">do</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_nil</span><span class="punct">(</span>
+  <span class="ident">maybe</span><span class="punct">(</span><span class="ident">yoda</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">do_not</span><span class="punct">.</span><span class="ident">do</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_nil</span><span class="punct">(</span>
+  <span class="ident">maybe</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">nil?</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_raise</span><span class="punct">(</span><span class="constant">NoMethodError</span><span class="punct">)</span> <span class="keyword">do</span>
+  <span class="ident">maybe</span><span class="punct">(</span><span class="ident">yoda</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">fubar</span> <span class="punct">}</span>
+<span class="keyword">end</span>
+
+<span class="comment">#try handles NoMethodErrors, without caring whether nil is involved</span>
+<span class="ident">assert_equal</span><span class="punct">(</span>
+  <span class="ident">yoda</span><span class="punct">,</span> 
+  <span class="ident">try</span><span class="punct">(</span><span class="ident">yoda</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">do</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_nil</span><span class="punct">(</span>
+  <span class="ident">try</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">do_not</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_not_nil</span><span class="punct">(</span>
+  <span class="ident">try</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">nil?</span> <span class="punct">}</span>
+<span class="punct">)</span>
+<span class="ident">assert_nil</span><span class="punct">(</span>
+  <span class="ident">try</span><span class="punct">(</span><span class="ident">yoda</span><span class="punct">)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">obj</span><span class="punct">|</span> <span class="ident">obj</span><span class="punct">.</span><span class="ident">fubar</span> <span class="punct">}</span>
+<span class="punct">)</span>
+</pre></p>
+
+
+	<h2>Administrivia</h2>
+
+
+	<h3>Home Sweet Home</h3>
+
+
+	<p><a href="http://ick.rubyforge.org">ick.rubyforge.org</a></p>
+
+
+	<h3>How to submit patches</h3>
+
+
+	<p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a>.</p>
+
+
+	<p>The trunk repository is <code>svn://rubyforge.org/var/svn/ick/trunk</code> for anonymous access.</p>
+
+
+	<h3>License</h3>
+
+
+	<p>This code is free to use under the terms of the <a href="http://en.wikipedia.org/wiki/MIT_License"><span class="caps">MIT</span> license</a>.</p>
+
+
+	<h3>Shout Out</h3>
+
+
+	<p><a href="http://mcommons.com/">Mobile Commons</a>. Still Huge After All These Years.</p>
+
+
+	<h3>Contact</h3>
+
+
+	<p>Comments are welcome. Send an email to <a href="mailto:raganwald+rubyforge@gmail.com">Reginald Braithwaite</a>. And you can always visit <a href="http://weblog.raganwald.com/">weblog.raganwald.com</a> to see what&#8217;s cooking.</p>
+    <p class="coda">
+      <a href="http://weblog.raganwald.com/">Reginald Braithwaite</a>, 10th March 2008<br>
+      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
+    </p>
+</div>
+
+<!-- insert site tracking codes here, like Google Urchin -->
+
+<script type="text/javascript" src="http://pub44.bravenet.com/counter/code.php?id=404724&usernum=3754613835&cpv=2"></script>
+
+</body>
+</html>

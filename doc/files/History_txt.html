@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: History.txt</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>History.txt</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>History.txt
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Fri May 30 13:59:39 -0400 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>0.0.1 2008-03-07</h2>
+<ul>
+<li>1 major enhancement:
+
+<ul>
+<li>Initial super-alpha release
+
+</li>
+<li>Not particularly good at nesting
+
+</li>
+</ul>
+</li>
+<li>2 minor enhancement:
+
+<ul>
+<li>Changed with to inside avoid confusion with Object#with
+
+</li>
+</ul>
+</li>
+<li>3 minor enhancement:
+
+<ul>
+<li>refactored Wrapped into Wrap with runtime options
+
+</li>
+<li>added ArrayWrapper and Tee classes
+
+</li>
+</ul>
+</li>
+<li>4 tiny enhancement
+
+<ul>
+<li>fixed manifest.txt
+
+</li>
+<li>TODO: build the manifest algorithmically!
+
+</li>
+</ul>
+</li>
+<li>5 tiny enhancement
+
+<ul>
+<li>fork
+
+</li>
+</ul>
+</li>
+<li>6 tiny enhancement
+
+<ul>
+<li>work in progress on Advisor
+
+</li>
+</ul>
+</li>
+<li>7 minor enhancement
+
+<ul>
+<li>letn added experimentally
+
+</li>
+</ul>
+</li>
+<li>8 minor enhancement
+
+<ul>
+<li>letn changed to lets and now uses sexp rewriting
+
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+== 0.0.1 2008-03-07
+
+* 1 major enhancement:
+  * Initial super-alpha release
+  * Not particularly good at nesting
+* 2 minor enhancement:
+  * Changed #with to #inside avoid confusion with Object#with
+* 3 minor enhancement:
+  * refactored Wrapped into Wrap with runtime options
+  * added ArrayWrapper and Tee classes
+* 4 tiny enhancement
+  * fixed manifest.txt
+  * TODO: build the manifest algorithmically!
+* 5 tiny enhancement
+  * #fork
+* 6 tiny enhancement
+  * work in progress on Advisor
+* 7 minor enhancement
+  * letn added experimentally
+* 8 minor enhancement
+  * letn changed to lets and now uses sexp rewriting
+  

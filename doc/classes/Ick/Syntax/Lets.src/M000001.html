@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>rewrite_sexp (Ick::Syntax::Lets)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ick/syntax/lets.rb, line 12</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewrite_sexp</span>(<span class="ruby-identifier">names_to_values</span>, <span class="ruby-identifier">sexp</span>)
+        <span class="ruby-identifier">mono_parameter</span> = <span class="ruby-node">&quot;__#{Time.now.to_i}#{rand(100000)}__&quot;</span><span class="ruby-node">&quot;__#{Time.now.to_i}#{rand(100000)}__&quot;</span>
+        <span class="ruby-comment cmt"># the next four assignments are exactly why we want #lets:</span>
+        <span class="ruby-identifier">sorted_symbols</span> = (<span class="ruby-identifier">names_to_values</span> <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> }.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span> }
+        <span class="ruby-identifier">parameters</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sorted_symbols</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+          <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:dasgn_curr</span>, <span class="ruby-identifier">sorted_symbols</span>.<span class="ruby-identifier">first</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:masgn</span>, <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:array</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">sorted_symbols</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:dasgn_curr</span>, <span class="ruby-identifier">sym</span>) }) )
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">values</span> = <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:array</span>,
+          <span class="ruby-operator">*</span><span class="ruby-identifier">sorted_symbols</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:call</span>, <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:dvar</span>, <span class="ruby-identifier">mono_parameter</span>), <span class="ruby-identifier">:[]</span>, <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:array</span>, <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:lit</span>, <span class="ruby-identifier">sym</span>)))
+          }
+        )
+        <span class="ruby-identifier">body</span> = <span class="ruby-identifier">sexp</span>.<span class="ruby-identifier">last</span>
+      
+        <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:defn</span>, <span class="ruby-identifier">:__anonymous__</span>, 
+          <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:bmethod</span>, 
+            <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:dasgn_curr</span>, <span class="ruby-identifier">mono_parameter</span>), 
+            <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:call</span>, 
+              <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:iter</span>, 
+                <span class="ruby-identifier">s</span>(<span class="ruby-identifier">:fcall</span>, <span class="ruby-identifier">:lambda</span>), 
+                <span class="ruby-identifier">parameters</span>,
+                <span class="ruby-identifier">body</span>
+              ), 
+              <span class="ruby-identifier">:call</span>, 
+              <span class="ruby-identifier">values</span>
+            )
+          )
+        )
+
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

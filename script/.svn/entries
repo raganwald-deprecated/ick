@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2008-03-10T04:57:06.697106Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick/script"
+   last-author="raganwald"
+   kind="dir"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="txt2html"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="fe9764799bf4b8a34a9b74675b52bce5"
+   last-author="raganwald"
+   kind="file"
+   prop-time="2008-03-10T04:55:53.000000Z"/>
+<entry
+   committed-rev="1"
+   name="destroy"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="970029f16b5b3d1e1e9441ce966884c6"
+   last-author="raganwald"
+   kind="file"
+   prop-time="2008-03-10T04:55:53.000000Z"/>
+<entry
+   committed-rev="1"
+   name="generate"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="91ad729ec0143463b998a4bf24b4ca4d"
+   last-author="raganwald"
+   kind="file"
+   prop-time="2008-03-10T04:55:53.000000Z"/>
+</wc-entries>

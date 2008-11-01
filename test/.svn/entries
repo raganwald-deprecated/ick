@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2008-03-10T04:57:06.697106Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick/test"
+   last-author="raganwald"
+   kind="dir"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="test_helper.rb"
+   text-time="2008-03-09T16:56:43.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="3603436a1bf85c1f278e5f71b85d301a"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="test_ick.rb"
+   text-time="2008-03-09T16:56:46.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="95220342cb362b6de7af9d99e5e63605"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="test_advisor.rb"
+   text-time="2008-03-10T04:32:41.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="30aa53d6fc3b6f2060a92e21a8fa8b6f"
+   last-author="raganwald"
+   kind="file"/>
+</wc-entries>

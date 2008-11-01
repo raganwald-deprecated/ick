@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="0"
+   name=""
+   committed-date="2008-03-07T13:46:10.631799Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   kind="dir"
+   uuid="be80e314-ce3b-4dd1-ab14-25665a6ab324"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="0"/>
+<entry
+   name="test"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="History.txt"
+   text-time="2008-03-10T04:46:40.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="f32037b3801833cbea54ddbf0717baf4"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+<entry
+   name="pkg"
+   kind="dir"/>
+<entry
+   name="log"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="Rakefile"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="120b066d386a523afe7f5613c386710e"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="Manifest.txt"
+   text-time="2008-03-09T15:38:47.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="d857aef65c95d86db917db216f1cfcd8"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+<entry
+   name="tasks"
+   kind="dir"/>
+<entry
+   name="tmp"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="License.txt"
+   text-time="2008-03-07T22:24:17.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="4062dbd4427ce141cd6d26b5e1af9bff"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+<entry
+   name="website"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="setup.rb"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="f3e96d4b9eeb3d0c4d841c7c7ea6259c"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+<entry
+   name="script"
+   kind="dir"/>
+<entry
+   name="doc"
+   kind="dir"/>
+<entry
+   name="config"
+   kind="dir"/>
+<entry
+   name="lib"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="README.txt"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="c47c7c7383225ab55ff591cb59c41e6b"
+   last-author="raganwald"
+   kind="file"
+   revision="1"/>
+</wc-entries>

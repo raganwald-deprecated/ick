@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2008-03-10T04:57:06.697106Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick/tasks"
+   last-author="raganwald"
+   kind="dir"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="deployment.rake"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="0e8e030c4d0ef0933ccf4a30302ea285"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="website.rake"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="f318cdc23498208b37b8517df2c3c7b0"
+   last-author="raganwald"
+   kind="file"/>
+<entry
+   committed-rev="1"
+   name="environment.rake"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="917a284d2b5e33fb48d3ae2937cccfb9"
+   last-author="raganwald"
+   kind="file"/>
+</wc-entries>

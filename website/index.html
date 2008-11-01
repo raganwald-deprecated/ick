@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link rel="stylesheet" href="stylesheets/screen.css" type="text/css" media="screen" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>
+      Invocation Construction Kit
+  </title>
+  <script src="javascripts/rounded_corners_lite.inc.js" type="text/javascript"></script>
+<style>
+
+</style>
+  <script type="text/javascript">
+    window.onload = function() {
+      settings = {
+          tl: { radius: 10 },
+          tr: { radius: 10 },
+          bl: { radius: 10 },
+          br: { radius: 10 },
+          antiAlias: true,
+          autoPad: true,
+          validTags: ["div"]
+      }
+      var versionBox = new curvyCorners(settings, document.getElementById("version"));
+      versionBox.applyCornersToAll();
+    }
+  </script>
+</head>
+<body>
+<div id="main">
+
+    <h1>Invocation Construction Kit</h1>
+    <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/ick"; return false'>
+      <p>Get Version</p>
+      <a href="http://rubyforge.org/projects/ick" class="numbers">0.3.1</a>
+    </div>
+    <h1>&#x2192; &#8216;ick&#8217;</h1>
+
+
+	<h2>What</h2>
+
+
+	<p>The Generalized Greenspun Rule: <em>Any sufficiently complicated platform contains an ad hoc, informally-specified, bug-ridden, slow implementation of half of a functional programming language.</em></p>
+
+
+	<p>While Ruby provides an ad hoc, informally-specified, bug-ridden, slow implementation of half of higher-order functional programming, it lacks an ad hoc, informally-specified, bug-ridden, slow implementation of half of Monads.</p>
+
+
+	<p>Thus, the <strong>Invocation Construction Kit</strong>, or &#8220;Ick!&#8221; Ick provides the tools needed to easily build your own execution abstractions like the &#8220;Maybe&#8221; monad or the four canonical block evaluators, as well as providing some sugar so you can write things like:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">please</span><span class="punct">(</span><span class="ident">sir</span><span class="punct">)</span> <span class="punct">{</span> <span class="ident">may</span><span class="punct">.</span><span class="ident">i</span><span class="punct">.</span><span class="ident">have</span><span class="punct">.</span><span class="ident">some</span><span class="punct">.</span><span class="ident">more</span> <span class="punct">}</span>
+</pre></p>
+
+
+	<h2>Getting Started</h2>
+
+
+<pre>sudo gem install ick</pre>
+
+	<h2>Block Structured Ruby</h2>
+
+
+	<p>Although Ruby borrows many of its features from Lisp and its syntax from Algol, it does not have block-local variables. In other words, if you declare a variable anywhere inside of a method, that variable is visible everywhere in that method. This is a problem, because it encourages writing methods where the instance variables create lot of dependencies between different expressions. Those methods can be hard to understand and refactor.</p>
+
+
+	<p>Ick solves this problem by providing a block structure method: #let. #let takes an expression and binds it to a variable inside of a block. For example, if you want someone&#8217;s phone number only if they are a friend:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">let</span><span class="punct">(</span><span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">person</span><span class="punct">|</span> <span class="ident">person</span><span class="punct">.</span><span class="ident">phone_number</span> <span class="keyword">if</span> <span class="ident">person</span><span class="punct">.</span><span class="ident">friend?</span> <span class="punct">}</span>
+</pre></p>
+
+
+	<p>This code makes it clear that you only need the <code>person</code> variable inside the block. If you want to refactor this code, you know that the entire expression can move without breaking another piece of code. Ick provides three other block structure methods (#returning, #my, and #inside) that are detailed on the <a href="inside.html">Inside Ick</a> page.</p>
+
+
+	<h2>Guarded Evaluation</h2>
+
+
+	<p>The example above is a common one. Sometimes we want to evaluate a chain of method calls without throwing a <em>NoMethodError</em> if one of the recipients is nil. Sometimes we want to send something a message if and only if it handles the method. There are lots of ad-hoc solutions, including <a href="http://andand.rubyforge.org">Object#andand</a>. What if you don&#8217;t want to install lots of different gems, one for each use?</p>
+
+
+	<p>Ick solves this problem by providing a structure for rolling your own guarded evaluation. You can check for nil, #respond_to?, custom permissions, whatever you like. It looks like this:</p>
+
+
+	<p><pre class='syntax'>
+<span class="keyword">class </span><span class="class">Try</span> <span class="punct">&lt;</span> <span class="constant">Ick</span><span class="punct">::</span><span class="constant">Guard</span>
+  <span class="ident">guard_with</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">value</span><span class="punct">,</span> <span class="ident">sym</span><span class="punct">|</span> <span class="ident">value</span><span class="punct">.</span><span class="ident">respond_to?</span><span class="punct">(</span><span class="ident">sym</span><span class="punct">)</span> <span class="punct">==</span> <span class="constant">true</span> <span class="punct">}</span>
+  <span class="ident">evaluates_in_calling_environment</span> <span class="keyword">and</span> <span class="ident">returns_result</span>
+  <span class="ident">belongs_to</span> <span class="constant">Object</span>
+<span class="keyword">end</span>
+
+<span class="ident">try</span><span class="punct">(...)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">sir</span><span class="punct">|</span> <span class="ident">sir</span><span class="punct">.</span><span class="ident">may</span><span class="punct">.</span><span class="ident">i</span><span class="punct">.</span><span class="ident">have</span><span class="punct">.</span><span class="ident">some</span><span class="punct">.</span><span class="ident">more</span> <span class="punct">}</span>
+</pre></p>
+
+
+	<p>(Try is built into Ick and was inspired by Chris Wanstrath&#8217;s <a href="http://ozmm.org/posts/try.html">try()</a> and Chalain&#8217;s <a href="http://chalain.livejournal.com/66798.html">Turtles</a>)</p>
+
+
+	<p>Maybe does exactly the same thing with checking nil rather than whether an object responds to a message:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">maybe</span><span class="punct">(...)</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">person</span><span class="punct">|</span> <span class="ident">person</span><span class="punct">.</span><span class="ident">manager</span><span class="punct">.</span><span class="ident">authority_level</span><span class="punct">.</span><span class="ident">permissions</span> <span class="punct">}</span>
+</pre></p>
+
+
+	<p>Both #try and #maybe are <em>contagious</em>: everything in the chain inside the block is guarded.</p>
+
+
+	<h2>More sugar!</h2>
+
+
+	<p>If you just want to call a method by name without parameters, the existing blocks work well with Symbol#to_proc:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">maybe</span><span class="punct">(</span><span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...),</span> <span class="punct">&amp;</span><span class="symbol">:manager</span><span class="punct">)</span>
+</pre></p>
+
+
+	<p>But you can also use these methods the way Object#andand works:</p>
+
+
+	<p><pre class='syntax'>
+<span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...).</span>
+	<span class="ident">maybe</span><span class="punct">.</span><span class="ident">time_cards</span><span class="punct">.</span>
+	<span class="ident">maybe</span><span class="punct">.</span><span class="ident">map</span><span class="punct">(&amp;</span><span class="symbol">:hours_worked</span><span class="punct">).</span>
+	<span class="ident">maybe</span><span class="punct">.</span><span class="ident">inject</span><span class="punct">(</span><span class="number">0</span><span class="punct">,</span> <span class="punct">&amp;:+)</span>
+</pre></p>
+
+
+	<p>When you do that, you have to keep calling the method in order to chain them all together, so you might prefer:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">maybe</span><span class="punct">(</span><span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...))</span> <span class="punct">{</span> <span class="punct">|</span><span class="ident">p</span><span class="punct">|</span> 
+	<span class="ident">p</span><span class="punct">.</span><span class="ident">time_cards</span><span class="punct">.</span><span class="ident">map</span><span class="punct">(&amp;</span><span class="symbol">:hours_worked</span><span class="punct">).</span><span class="ident">inject</span><span class="punct">(</span><span class="number">0</span><span class="punct">,</span> <span class="punct">&amp;:+)</span> 
+<span class="punct">}</span>
+</pre></p>
+
+
+	<p>The Object#andand-style syntax is most useful when you&#8217;re just using it for a single method invocation, such as:</p>
+
+
+	<p><pre class='syntax'>
+<span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...).</span><span class="ident">maybe</span><span class="punct">.</span><span class="ident">salary</span> <span class="punct">=</span> <span class="number">42</span><span class="punct">,</span><span class="number">000</span>
+</pre></p>
+
+
+	<h3>New in Version 0.3!</h3>
+
+
+	<p>Ick version 0.3 includes an experiemental form of let, <code>lets</code>, that allows you to bind multiple variables:</p>
+
+
+	<p><pre class='syntax'>
+<span class="ident">lets</span><span class="punct">(</span>
+    <span class="symbol">:person</span> <span class="punct">=&gt;</span> <span class="constant">Person</span><span class="punct">.</span><span class="ident">find</span><span class="punct">(</span><span class="symbol">:first</span><span class="punct">,</span> <span class="punct">...),</span>
+    <span class="symbol">:place</span>  <span class="punct">=&gt;</span> <span class="constant">City</span><span class="punct">.</span><span class="ident">select</span> <span class="punct">{</span> <span class="punct">...</span> <span class="punct">},</span>
+    <span class="symbol">:thing</span>  <span class="punct">=&gt;</span> <span class="punct">%w(</span><span class="string">ever loving blue eyed</span><span class="punct">))</span> <span class="punct">{</span>
+  <span class="punct">&quot;</span><span class="string"><span class="expr">#{person.name}</span> lives in <span class="expr">#{place}</span> where he is known as the '<span class="expr">#{thing}</span> thing.'</span><span class="punct">&quot;</span>
+<span class="punct">}</span>
+</pre></p>
+
+
+	<h3>(But I heard that Ick is destroying Ruby&#8253;)</h3>
+
+
+	<p>Have no fear of that. Ick will not modify any classes without permission. Out of the box, you cannot call any of Ick&#8217;s built in methods the way you see them in these examples. Instead of <code>please(sir) {...}</code> you actually have to call <code>Ick::Please.instance.invoke(sir) {...}</code>. If you want to install one or more of the built-in methods in to the Object class, you call #belongs_to. For example, to install the Maybe and Let methods but no others:</p>
+
+
+	<p><pre class='syntax'>
+<span class="constant">Ick</span><span class="punct">::</span><span class="constant">Maybe</span><span class="punct">.</span><span class="ident">belongs_to</span> <span class="constant">Object</span>
+<span class="constant">Ick</span><span class="punct">::</span><span class="constant">Let</span><span class="punct">.</span><span class="ident">belongs_to</span> <span class="constant">Object</span>
+</pre></p>
+
+
+	<p>You could also install some or all of the methods into a single class where you think you&#8217;ll be using them a lot but nowhere else:</p>
+
+
+	<p><pre class='syntax'>
+<span class="keyword">class </span><span class="class">MyAwesomeImplementationOfAsteroids</span>
+	<span class="punct">[</span><span class="constant">Ick</span><span class="punct">::</span><span class="constant">Let</span><span class="punct">,</span> <span class="constant">Ick</span><span class="punct">::</span><span class="constant">Returning</span><span class="punct">,</span> <span class="constant">Ick</span><span class="punct">::</span><span class="constant">My</span><span class="punct">,</span> <span class="constant">Ick</span><span class="punct">::</span><span class="constant">Inside</span><span class="punct">].</span><span class="ident">each</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">clazz</span><span class="punct">|</span>
+		<span class="ident">clazz</span><span class="punct">.</span><span class="ident">belongs_to</span> <span class="constant">self</span>
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre></p>
+
+
+	<p>If you simply want everything you see here working exactly as it&#8217;s shown, simply call <code>Ick.sugarize</code> once and all of the built-in methods will be installed into Object for you. You can put that in your environment.rb file if you&#8217;re using Rails.</p>
+
+
+	<p>The point is, <code>try(program) { responsibly }</code>. You choose which classes to open and which methods to add. <a href="http://avdi.org/devblog/2008/02/25/full-disclosure/">All I’m saying is this: before re-opening a class, did you go through the rest of your toolbox first?</a></p>
+
+
+	<h2>Is Ick for me?</h2>
+
+
+	<p>Ick does provide a number of very convenient methods for abstracting evaluation. If you adopt them for your project, your code will be more readable, more succinct, and easier to refactor. That being said, it will not make your teeth whiter or help you sleep if you have a newborn.</p>
+
+
+	<p><em>Every programming problem can be solved with another layer of abstraction, except the problem of too many layers of abstraction</em></p>
+
+
+	<p>The important caveat about Ick is that its implementation adds abstraction. If all you want are two or three specific methods, writing them as simply and as directly as possible makes for a very simple implementation. Ick uses classes and templates instead of simple methods so that when you are ready to start writing your own abstractions, you can easily use the pieces that Ick has built-in. If Ick was written as a collection of cool methods, you would not be able to extend it without copying and pasting.</p>
+
+
+	<p>Ick raises how you handle things to the level of first-class objects in Ruby, so you can mix and match and separate concerns as you see fit. Logging, permissions, error handling&#8230; These are some of the places you can take Ick. Have fun.</p>
+
+
+	<h2>Where can I read about what&#8217;s going on inside Ick?</h2>
+
+
+	<p><a href="inside.html">Inside Ick</a></p>
+
+
+	<h2>That&#8217;s cool, but&hellip;</h2>
+
+
+	<p>No problem, I get that Ick isn&#8217;t exactly what you need. Why not have a look at <a href="http://andand.rubyforge.org">andand</a>? The andand gem gives you a very specialized version of Object#maybe and an enhanced Object#tap: it does a lot less but tries to do it very, very well. Have a look and let me know what you think.</p>
+
+
+	<h2>Administrivia</h2>
+
+
+	<h3>Home Sweet Home</h3>
+
+
+	<p><a href="http://ick.rubyforge.org">ick.rubyforge.org</a></p>
+
+
+	<h3>How to submit patches</h3>
+
+
+	<p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a>.</p>
+
+
+	<p>The trunk repository is <code>svn://rubyforge.org/var/svn/ick/trunk</code> for anonymous access.</p>
+
+
+	<h3>License</h3>
+
+
+	<p>This code is free to use under the terms of the <a href="http://en.wikipedia.org/wiki/MIT_License"><span class="caps">MIT</span> license</a>.</p>
+
+
+	<h3>Shout Out</h3>
+
+
+	<p><a href="http://mcommons.com/">Mobile Commons</a>. Still Huge After All These Years.</p>
+
+
+	<h3>Contact</h3>
+
+
+	<p>Comments are welcome. Send an email to <a href="mailto:raganwald+rubyforge@gmail.com">Reginald Braithwaite</a>. And you can always visit <a href="http://weblog.raganwald.com/">weblog.raganwald.com</a> to see what&#8217;s cooking.</p>
+    <p class="coda">
+      <a href="http://weblog.raganwald.com/">Reginald Braithwaite</a>, 30th May 2008<br>
+      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
+    </p>
+</div>
+
+<!-- insert site tracking codes here, like Google Urchin -->
+
+<script type="text/javascript" src="http://pub44.bravenet.com/counter/code.php?id=404724&usernum=3754613835&cpv=2"></script>
+
+</body>
+</html>

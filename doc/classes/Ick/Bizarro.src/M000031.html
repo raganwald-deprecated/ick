@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>belongs_to (Ick::Bizarro)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ick/bizarro.rb, line 16</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">belongs_to</span> <span class="ruby-identifier">clazz</span>
+      <span class="ruby-identifier">method_name</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">underscore</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'::'</span>)[<span class="ruby-value">-1</span>])
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">clazz</span>.<span class="ruby-identifier">method_defined?</span>(<span class="ruby-identifier">method_name</span>)
+        <span class="ruby-identifier">clazz</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-node">&quot; 
+          def #{method_name}(*values,&amp;proc)
+            values = [self] if values.empty?
+            if block_given?
+              #{self.name}.instance.invoke(*values, &amp;proc)
+            else
+              Invoker.new(values, #{self.name})
+            end
+          end&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

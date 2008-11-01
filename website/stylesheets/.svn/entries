@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2008-03-10T04:57:06.697106Z"
+   url="svn+ssh://raganwald@rubyforge.org/var/svn/ick/website/stylesheets"
+   last-author="raganwald"
+   kind="dir"
+   repos="svn+ssh://raganwald@rubyforge.org/var/svn/ick"
+   revision="1"/>
+<entry
+   committed-rev="1"
+   name="screen.css"
+   text-time="2008-03-07T21:30:30.000000Z"
+   committed-date="2008-03-10T04:57:06.697106Z"
+   checksum="6f643048a348d43481ad1e896081377d"
+   last-author="raganwald"
+   kind="file"/>
+</wc-entries>
