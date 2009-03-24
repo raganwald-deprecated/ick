@@ -1,8 +1,0 @@
-$:.unshift File.dirname(__FILE__)
-
-require 'ick/base'
-require 'ick/wrap'
-require 'ick/advisor'
-require 'ick/guard'
-require 'ick/tee'
-require 'ick/sugar'

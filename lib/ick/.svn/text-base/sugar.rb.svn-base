@@ -1,7 +1,0 @@
-module Ick
-  def self.sugarize
-    [Let, Returning, My, Inside, Maybe, Try, Please, Tee, Fork].each do |clazz|
-      clazz.belongs_to Object
-    end
-  end
-end
