@@ -1,7 +1,5 @@
 h1. Invocation Construction Kit
 
-h1. &#x2192; 'ick'
-
 h2. What
 
 The Generalized Greenspun Rule: _Any sufficiently complicated platform contains an ad hoc, informally-specified, bug-ridden, slow implementation of half of a functional programming language._
@@ -139,19 +137,19 @@ h2. Where can I read about what's going on inside Ick?
 
 h2. That's cool, but&hellip;
 
-No problem, I get that Ick isn't exactly what you need. Why not have a look at "andand":http://andand.rubyforge.org? The andand gem gives you a very specialized version of Object#maybe and an enhanced Object#tap: it does a lot less but tries to do it very, very well. Have a look and let me know what you think.
+No problem, I get that Ick isn't exactly what you need. Why not have a look at "andand":hhttps://github.com/raganwald/andand? The andand gem gives you a very specialized version of Object#maybe and an enhanced Object#tap: it does a lot less but tries to do it very, very well. Have a look and let me know what you think.
 
 h2. Administrivia
 
 h3. Home Sweet Home
 
-"ick.rubyforge.org":http://ick.rubyforge.org
+"https://github.com/raganwald/ick":https://github.com/raganwald/ick
 
 h3. How to submit patches
 
 Read the "8 steps for fixing other people's code":http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/.
 
-The trunk repository is @svn://rubyforge.org/var/svn/ick/trunk@ for anonymous access.
+The trunk repository is @git://github.com/raganwald/ick.git@ for anonymous access.
 
 h3. License
 
